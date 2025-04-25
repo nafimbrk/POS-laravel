@@ -1,0 +1,202 @@
+🗂 Struktur Tabel POS
+Berikut adalah tabel-tabel utama dan relasinya:
+
+products (daftar barang)
+
+categories (kategori produk)
+
+transactions (transaksi penjualan)
+
+transaction_details (detail barang per transaksi)
+
+users (kasir yang melakukan transaksi, pakai default Laravel)
+
+
+
+
+
+
+🔄 Relasi Antar Tabel
+
+Tabel	Relasi
+products	belongsTo categories
+categories	hasMany products
+transactions	belongsTo users (kasir)
+transactions	hasMany transaction_details
+transaction_details	belongsTo transactions, belongsTo products
+
+
+
+
+
+
+
+💡 Penjelasan Relasi
+Category hasMany Products → satu kategori bisa punya banyak produk.
+
+Product belongsTo Category → satu produk hanya punya satu kategori.
+
+Transaction belongsTo User → transaksi dilakukan oleh satu kasir.
+
+Transaction hasMany TransactionDetails → satu transaksi bisa terdiri dari banyak produk.
+
+TransactionDetail belongsTo Product → tiap baris transaksi menunjuk ke produk tertentu.
+
+TransactionDetail belongsTo Transaction → tiap detail bagian dari transaksi utama.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. Proses Pendaftaran dan Login (User Authentication) ✔
+Fitur: Pendaftaran Pengguna (Sign Up)
+
+Pengguna mengisi form pendaftaran dengan data seperti nama, email, dan password.
+
+Sistem menyimpan data pengguna baru ke tabel users dan mengirimkan email verifikasi jika diperlukan.
+
+Fitur: Login Pengguna
+
+Pengguna memasukkan email dan password.
+
+Sistem memeriksa kecocokan email dan password.
+
+Jika berhasil, pengguna diarahkan ke halaman dashboard.
+
+Jika gagal, tampilkan pesan error.
+
+2. Manajemen Kategori ✔
+Fitur: Menambahkan Kategori
+
+Admin dapat menambahkan kategori baru.
+
+Sistem menyimpan kategori baru ke tabel categories.
+
+Fitur: Melihat Daftar Kategori
+
+Admin dapat melihat daftar kategori yang ada.
+
+Sistem menampilkan nama kategori yang terdaftar.
+
+Fitur: Menghapus Kategori
+
+Admin dapat menghapus kategori yang tidak diperlukan.
+
+Sistem akan menghapus kategori tersebut dari tabel categories dan memastikan bahwa produk yang terkait dengan kategori tersebut juga dihapus.
+
+3. Manajemen Produk
+Fitur: Menambahkan Produk
+
+Admin dapat menambahkan produk dengan memilih kategori produk dan mengisi detail seperti nama produk, harga, dan jumlah stok.
+
+Sistem menyimpan produk ke tabel products dan menghubungkannya dengan kategori yang dipilih.
+
+Fitur: Melihat Daftar Produk
+
+Admin atau pengguna dapat melihat daftar produk yang ada, termasuk nama, kategori, harga, dan jumlah stok.
+
+Sistem menampilkan daftar produk yang terdaftar di database.
+
+Fitur: Mengedit Produk
+
+Admin dapat mengedit data produk yang sudah ada, seperti mengubah harga atau stok.
+
+Sistem memperbarui data produk di tabel products.
+
+Fitur: Menghapus Produk
+
+Admin dapat menghapus produk yang tidak diperlukan.
+
+Sistem menghapus produk tersebut dari tabel products dan menyesuaikan jumlah stok jika ada transaksi terkait.
+
+4. Proses Transaksi (Penjualan)
+Fitur: Membuat Transaksi Baru
+
+Kasir (atau pengguna yang berhak) memulai transaksi baru.
+
+Kasir memilih produk yang dibeli dan mengisi jumlah pembelian.
+
+Sistem menghitung total harga berdasarkan jumlah produk dan harga per item.
+
+Transaksi disimpan di tabel transactions, dan setiap detail produk yang dibeli disimpan di tabel transaction_details.
+
+Fitur: Melihat Riwayat Transaksi
+
+Admin atau kasir dapat melihat daftar transaksi yang sudah terjadi.
+
+Sistem menampilkan daftar transaksi lengkap dengan total dan produk yang dibeli.
+
+5. Proses Pembayaran
+Fitur: Pembayaran Transaksi
+
+Kasir menghitung total harga dan menerima pembayaran dari pelanggan.
+
+Pembayaran dicatat dalam transaksi, dan status transaksi diperbarui (misalnya "Lunas").
+
+Setelah pembayaran selesai, sistem memberikan struk atau bukti pembayaran kepada pelanggan.
+
+6. Laporan dan Statistik
+Fitur: Laporan Penjualan
+
+Admin dapat melihat laporan penjualan berdasarkan kategori produk, total transaksi, atau waktu tertentu.
+
+Sistem menyajikan data penjualan dalam bentuk grafik atau tabel untuk analisis.
+
+Fitur: Laporan Stok
+
+Admin dapat melihat laporan stok produk yang tersisa.
+
+Sistem memberikan informasi tentang produk yang hampir habis atau kehabisan stok.
+
+Algoritma Umum Alur Kerja Aplikasi
+User Login / Register
+
+Pengguna membuka halaman login.
+
+Jika belum memiliki akun, pengguna bisa mendaftar.
+
+Setelah berhasil login, pengguna diarahkan ke dashboard.
+
+Manajemen Kategori dan Produk (Admin)
+
+Admin bisa menambahkan, mengedit, atau menghapus kategori produk.
+
+Admin bisa menambah produk baru, mengedit produk, atau menghapus produk.
+
+Admin bisa melihat daftar kategori dan produk yang ada.
+
+Transaksi (Kasir)
+
+Kasir memilih produk dan jumlahnya untuk memulai transaksi.
+
+Kasir menerima pembayaran dan menyelesaikan transaksi.
+
+Detail transaksi disimpan di database.
+
+Laporan dan Statistik (Admin)
+
+Admin bisa melihat laporan penjualan dan stok produk untuk memantau kinerja.
+
+Fitur-fitur yang perlu kamu buat:
+
+User Authentication (Login/Register) untuk pengguna.
+
+CRUD untuk Kategori dan Produk (Create, Read, Update, Delete).
+
+Fitur Transaksi Penjualan dengan perhitungan harga.
+
+Pembayaran dan Pencatatan Transaksi.
+
+Laporan Penjualan dan Stok.
