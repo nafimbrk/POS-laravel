@@ -1,12 +1,40 @@
 <x-layout title="Category">
+
     <div class="p-4 sm:ml-64">
-        <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+
+        <div class="dark:border-gray-700 mt-16">
+
+    <div class="flex justify-between rounded-sm bg-white dark:bg-gray-800">
+        <a href="{{ route('category.create') }}" class="font-bold text-2xl text-blue-600 hover:underline">Tambah Kategori</a>
 
 
-            <div class="flex justify-between rounded-sm bg-white dark:bg-gray-800">
-                <a href="{{ route('category.create') }}" class="font-bold text-2xl mb-6 text-blue-600 underline">Tambah Kategori</a>
 
+
+        <form class="max-w-lg">
+                <div class="relative w-full">
+                    <input type="search" name="search" id="search-dropdown" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-gray-300 border focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" value="{{ request('search') }}" />
+                    <button type="submit" class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                        </svg>
+                        <span class="sr-only">Search</span>
+                    </button>
             </div>
+        </form>
+
+    </div>
+    </div>
+    </div>
+
+    <div class="p-4 sm:ml-64">
+        <div class="p-4 border-2 border-gray-200 rounded-lg dark:border-gray-700">
+
+
+                <h1 class="font-bold text-2xl">Kategori</h1>
+
+
+
+
             @if(session('success'))
             <div id="alert-3" class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
                 <svg class="shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -24,40 +52,48 @@
                 </button>
               </div>
               @endif
-           <div class="flex items-center justify-center h-99 mb-4 rounded-sm bg-gray-50 dark:bg-gray-800">
+           <div class="flex items-center justify-center h-99 mb-4 mt-5 rounded-sm bg-gray-50 dark:bg-gray-800">
 
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            @if ($categories->isNotEmpty())
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">Nama Kategori</th>
+                        <th scope="col" class="px-6 py-3">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($categories as $category)
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ $category->name }}
+                        </th>
+                        <td class="px-6 py-4">
+                            <a href="{{ route('category.edit', $category->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            <form action="{{ route('category.destroy', $category->id) }}" method="POST" class="inline ml-2">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline" onclick="return confirm('Yakin ingin menghapus data?')">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @else
+            <div class="w-full text-center text-gray-700 dark:text-gray-300 py-10">
+                <h2 class="text-lg font-semibold">Data tidak ditemukan.</h2>
+            </div>
+        @endif
 
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    Nama Kategori
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Aksi
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($categories as $category)
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ $category->name }}
-                </th>
-                <td class="px-6 py-4">
-                    <a href="{{ route('category.edit', $category->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                   <form action="{{ route('category.destroy', $category->id) }}" method="POST" class="inline ml-2">
-                    @csrf
-                    @method('DELETE')
-                       <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline" onclick="return confirm('Yakin ingin menghapus data?')">Hapus</button>
-                   </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
 
-           </div>
-        </div>
-     </div>
+
+
+
+
+
+    </div>
+    {{ $categories->links() }}
+</div>
+</div>
 </x-layout>

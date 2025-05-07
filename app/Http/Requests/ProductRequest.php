@@ -22,16 +22,18 @@ class ProductRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'image' => 'mimes:jpeg,jpg,png,gif,webp',
             'name' => 'required',
-            'category_id' => 'integer|required',
-            'stock' => 'integer|required',
-            'price' => 'integer|required'
+            'category_id' => 'required',
+            'stock' => 'required',
+            'price' => 'required'
         ];
     }
 
     public function messages(): array
     {
         return [
+            'image.mimes:jpeg,jpg,png,gif' => 'gambar harus berformat jpeg/jpg/png/gif/webp',
             'name.required' => 'nama produk wajib diisi',
             'category_id.required' => 'kategori wajib diisi',
             'stock.required' => 'stok wajib diisi',

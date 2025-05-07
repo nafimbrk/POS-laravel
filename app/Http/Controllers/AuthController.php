@@ -23,6 +23,7 @@ class AuthController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->role_id = 2;
         $user->save();
         return redirect()->route('login.view')->with('success', 'Berhasil register, silahkan login');
     }
