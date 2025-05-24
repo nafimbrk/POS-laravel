@@ -48,17 +48,9 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
 
-        $newName = '';
-
-        if ($request->file('image')) {
-            $extension = $request->file('image')->getClientOriginalExtension();
-            $newName = $request->name . '-' . now()->timestamp . '.' . $extension;
-            $request->file('image')->storeAs('public/image', $newName);
-        }
 
         $product = new Product();
 
-        $product->image = $newName;;
         $product->name = $request->name;
         $product->category_id = $request->category_id;
         $product->stock = $request->stock;
@@ -96,30 +88,13 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        $newName = '';
 
-        if ($request->file('image')) {
-            $extension = $request->file('image')->getClientOriginalExtension();
-            $newName = $request->name . '-' . now()->timestamp . '.' . $extension;
-            $request->file('image')->storeAs('public/image', $newName);
-
-            Storage::delete('public/image/' . $product->image);
-
-            $product->image = $newName;
             $product->name = $request->name;
             $product->category_id = $request->category_id;
             $product->stock = $request->stock;
             $product->price = $request->price;
 
             $product->save();
-        } else {
-            $product->name = $request->name;
-            $product->category_id = $request->category_id;
-            $product->stock = $request->stock;
-            $product->price = $request->price;
-
-            $product->save();
-        }
 
 
 
@@ -132,8 +107,6 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
-
-        Storage::delete('public/image/'. $product->image);
 
         $product->delete();
 

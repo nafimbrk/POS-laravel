@@ -65,9 +65,6 @@
                     No
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Gambar
-                </th>
-                <th scope="col" class="px-6 py-3">
                     Nama Produk
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -89,13 +86,6 @@
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{-- {{ $loop->iteration + ($products->currentPage() - 1) * $products->perPage() }} --}}
-                </th>
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    @if ($product->image)
-                    <img src="{{ asset('storage/image/' . $product->image) }}" alt="" width="150" class="rounded-lg">
-                    @else
-                    <p>Tidak ada gambar</p>
-                    @endif
                 </th>
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {{ $product->name }}

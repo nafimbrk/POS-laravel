@@ -4,8 +4,7 @@
 
             <h1 class="font-bold text-2xl mb-6">Edit Produk</h1>
 
-            <form class="mx-auto" action="{{ route('product.update', $product->id) }}" method="POST"
-                enctype="multipart/form-data">
+            <form class="mx-auto" action="{{ route('product.update', $product->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="mb-5">
@@ -17,20 +16,6 @@
                     <input type="text" name="name" id="name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 @error('name') is-invalid @enderror"
                         value="{{ $product->name }}" />
-                </div>
-                <div class="mb-5">
-
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        for="file_input">Gambar</label>
-
-                    @error('image')
-                    <p class="text-red-500 italic">{{ $message }}</p>
-                    @enderror
-                    <input
-                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 @error('image') is-invalid @enderror"
-                        id="image" name="image" type="file">
-                    <img id="previewImage" src="{{ asset('storage/image/' . $product->image) }}" alt="Preview"
-                        class="mt-2 w-50 h-32 object-cover rounded border">
                 </div>
                 <div class="mb-5">
                     <label for="category_id"
